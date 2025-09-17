@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', serif;
+    background: #4a90e2 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234a90e2"/><path d="M0 0h50v50H0zM50 50h50v50H50z" fill="%235ba3f5" opacity="0.3"/></svg>') repeat;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Decorative buttons scattered around */
+.decorative-buttons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.btn-deco {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.btn-navy {
+    background: #2c3e50;
+    width: 40px;
+    height: 40px;
+}
+
+.btn-gold {
+    background: #f39c12;
+    width: 25px;
+    height: 25px;
+}
+
+.btn-yellow {
+    background: #f1c40f;
+    width: 15px;
+    height: 15px;
+}
+
+/* Position decorative elements */
+.btn-deco:nth-child(1) { top: 10%; right: 15%; }
+.btn-deco:nth-child(2) { top: 25%; left: 8%; }
+.btn-deco:nth-child(3) { top: 40%; right: 20%; }
+.btn-deco:nth-child(4) { top: 55%; left: 12%; }
+.btn-deco:nth-child(5) { top: 70%; right: 10%; }
+.btn-deco:nth-child(6) { top: 85%; left: 18%; }
+.btn-deco:nth-child(7) { top: 15%; left: 25%; }
+.btn-deco:nth-child(8) { top: 35%; right: 8%; }
+.btn-deco:nth-child(9) { bottom: 20%; left: 5%; }
+
+.header {
+    background: #961043;
+    padding: 15px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 10;
+}
+
+.header h1 {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.nav-menu {
+    background: #FFF9E3;
+    padding: 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 10;
+}
+
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li {
+    border-right: 1px solid #ddd;
+}
+
+.nav-menu li:last-child {
+    border-right: none;
+}
+
+.nav-menu a {
+    display: block;
+    padding: 12px 25px;
+    text-decoration: none;
+    color: #961043;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+    background: #961043;
+    color: white;
+    border-bottom: 3px solid #f39c12;
+}
+
+.main-content {
+    position: relative;
+    z-index: 5;
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.lace-frame {
+    background: white;
+    border: 20px solid white;
+    border-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><rect width="60" height="60" fill="white"/><path d="M0 30c8-8 16-8 24 0s16 8 24 0c8 8 8 16 0 24s-8 16 0 24c-8-8-16-8-24 0s-16-8-24 0c-8-8-8-16 0-24s8-16 0-24z" fill="%23e8e8e8"/></svg>') 20;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    min-height: 600px;
+    padding: 40px;
+    position: relative;
+}
+

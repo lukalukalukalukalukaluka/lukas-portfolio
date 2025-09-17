@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luka's Portfolio - Home</title>
+
+    <link rel="stylesheet" href="stylesheet.css">
+    <style>
+        .main-content {
+            position: relative;
+            z-index: 5;
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .lace-frame {
+            background: white;
+            border: 20px solid white;
+            
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            min-height: 800px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .portfolio-grid {
+            display: block;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .portfolio-section {
+            background: #f8f8f8;
+            border: 15px solid white;
+            
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-radius: 8px;
+        }
+
+        .portfolio-section:hover {
+            transform: rotate(0deg) scale(1.05) !important;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            background: #fff;
+            z-index: 10;
+        }
+
+        .portfolio-section h2 {
+            color: #961043;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Organic positioning for portfolio sections */
+        .portfolio-section:nth-child(1) { /* All */
+            margin-top: 20px;
+            margin-left: 50px;
+            width: 280px;
+            height: 120px;
+            transform: rotate(-1deg);
+        }
+
+        .portfolio-section:nth-child(2) { /* Paintings */
+            margin-top: -70px;
+            margin-left: auto;
+            margin-right: 40px;
+            width: 250px;
+            height: 100px;
+            transform: rotate(2deg);
+        }
+
+        .portfolio-section:nth-child(3) { /* BW Paintings */
+            margin-top: 30px;
+            margin-left: 30px;
+            width: 200px;
+            height: 110px;
+            transform: rotate(-3deg);
+        }
+
+        .portfolio-section:nth-child(4) { /* Color Paintings */
+            margin-top: -80px;
+            margin-left: auto;
+            margin-right: 80px;
+            width: 220px;
+            height: 95px;
+            transform: rotate(1deg);
+        }
+
+        .portfolio-section:nth-child(5) { /* Photography */
+            margin-top: 40px;
+            margin-left: 100px;
+            width: 300px;
+            height: 110px;
+            transform: rotate(-2deg);
+        }
+
+        .portfolio-section:nth-child(6) { /* BW Photography */
+            margin-top: 20px;
+            margin-left: 20px;
+            width: 180px;
+            height: 120px;
+            transform: rotate(3deg);
+        }
+
+        .portfolio-section:nth-child(7) { /* Color Photography */
+            margin-top: -90px;
+            margin-left: auto;
+            margin-right: 30px;
+            width: 190px;
+            height: 100px;
+            transform: rotate(-1deg);
+        }
+
+        .portfolio-section:nth-child(8) { /* Sketches */
+            margin-top: 50px;
+            margin-left: 150px;
+            width: 240px;
+            height: 110px;
+            transform: rotate(2deg);
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu ul {
+                flex-wrap: wrap;
+            }
+            
+            /* Mobile organic layout */
+            .portfolio-section {
+                position: relative !important;
+                transform: none !important;
+                width: 100% !important;
+                height: auto !important;
+                margin: 20px 0 !important;
+                top: auto !important;
+                left: auto !important;
+                right: auto !important;
+            }
+            
+            .portfolio-grid {
+                display: block;
+            }
+            
+            .lace-frame {
+                min-height: auto;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative buttons scattered around -->
+    <div class="decorative-buttons">
+        <div class="btn-deco btn-navy"></div>
+        <div class="btn-deco btn-gold"></div>
+        <div class="btn-deco btn-yellow"></div>
+        <div class="btn-deco btn-navy"></div>
+        <div class="btn-deco btn-gold"></div>
+        <div class="btn-deco btn-yellow"></div>
+        <div class="btn-deco btn-gold"></div>
+        <div class="btn-deco btn-yellow"></div>
+        <div class="btn-deco btn-navy"></div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>Luka's Portfolio</h1>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-menu">
+        <ul>
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="lace-frame">
+            <div class="portfolio-grid">
+                <div class="portfolio-section" onclick="goToGallery('all')">
+                    <h2>All</h2>
+                </div>
+                
+                <div class="portfolio-section" onclick="goToGallery('paintings')">
+                    <h2>Paintings</h2>
+                </div>
+                
+                <div class="portfolio-section" onclick="goToGallery('bw-paintings')">
+                    <h2>Black and White Paintings</h2>
+                </div>
+                
+                <div class="portfolio-section" onclick="goToGallery('color-paintings')">
+                    <h2>Colour Paintings</h2>
+                </div>
+                
+                <div class="portfolio-section" onclick="goToGallery('photography')">
+                    <h2>Photography</h2>
+                </div>
+                
+                <div class="portfolio-section" onclick="goToGallery('bw-photography')">
+                    <h2>Black and White Photography</h2>
+                </div>
+                
+                <div class="portfolio-section" onclick="goToGallery('color-photography')">
+                    <h2>Colour Photography</h2>
+                </div>
+                
+                <div class="portfolio-section" onclick="goToGallery('sketches')">
+                    <h2>Sketches</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goToGallery(category) {
+            // Store the selected category in localStorage
+            localStorage.setItem('selectedCategory', category);
+            // Navigate to gallery page
+            window.location.href = 'gallery.html';
+        }
+    </script>
+</body>
+</html>
