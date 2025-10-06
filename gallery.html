@@ -4,8 +4,326 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luka's Portfolio - Gallery</title>
-    <link rel="stylesheet" href="stylesheet.css">
-   
+
+    <link href="css/lightbox.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: #4a90e2 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234a90e2"/><path d="M0 0h50v50H0zM50 50h50v50H50z" fill="%235ba3f5" opacity="0.3"/></svg>') repeat;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Decorative buttons scattered around */
+        .decorative-buttons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .btn-deco {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .btn-navy {
+            background: #2c3e50;
+            width: 40px;
+            height: 40px;
+        }
+
+        .btn-gold {
+            background: #f39c12;
+            width: 25px;
+            height: 25px;
+        }
+
+        .btn-yellow {
+            background: #f1c40f;
+            width: 15px;
+            height: 15px;
+        }
+
+        /* Position decorative elements */
+        .btn-deco:nth-child(1) { top: 10%; right: 15%; }
+        .btn-deco:nth-child(2) { top: 25%; left: 8%; }
+        .btn-deco:nth-child(3) { top: 40%; right: 20%; }
+        .btn-deco:nth-child(4) { top: 55%; left: 12%; }
+        .btn-deco:nth-child(5) { top: 70%; right: 10%; }
+        .btn-deco:nth-child(6) { top: 85%; left: 18%; }
+        .btn-deco:nth-child(7) { top: 15%; left: 25%; }
+        .btn-deco:nth-child(8) { top: 35%; right: 8%; }
+        .btn-deco:nth-child(9) { bottom: 20%; left: 5%; }
+
+        .header {
+            background: #961043;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .nav-menu {
+            background: #FFF9E3;
+            padding: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu li {
+            border-right: 1px solid #ddd;
+        }
+
+        .nav-menu li:last-child {
+            border-right: none;
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 12px 25px;
+            text-decoration: none;
+            color: #961043;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: #961043;
+            color: white;
+            border-bottom: 3px solid #f39c12;
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 5;
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .lace-frame {
+            background: white;
+            border: 20px solid white;
+            border-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><rect width="60" height="60" fill="white"/><path d="M0 30c8-8 16-8 24 0s16 8 24 0c8 8 8 16 0 24s-8 16 0 24c-8-8-16-8-24 0s-16-8-24 0c-8-8-8-16 0-24s8-16 0-24z" fill="%23e8e8e8"/></svg>') 20;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            min-height: 600px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .gallery-title {
+            color: #961043;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* CSS Grid Layout */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            padding: 20px 0;
+            justify-items: center;
+        }
+
+        /* Polaroid Cards */
+        .polaroid {
+            background: white;
+            padding: 20px;
+            padding-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transition: all 0.4s ease;
+            position: relative;
+            max-width: 320px;
+            width: 100%;
+        }
+
+        /* Individual rotations for organic look */
+        .polaroid:nth-child(1) { transform: rotate(-2deg); }
+        .polaroid:nth-child(2) { transform: rotate(1deg); }
+        .polaroid:nth-child(3) { transform: rotate(-1deg); }
+        .polaroid:nth-child(4) { transform: rotate(2deg); }
+        .polaroid:nth-child(5) { transform: rotate(-1.5deg); }
+        .polaroid:nth-child(6) { transform: rotate(1.5deg); }
+        .polaroid:nth-child(7) { transform: rotate(-0.5deg); }
+        .polaroid:nth-child(8) { transform: rotate(0.5deg); }
+        .polaroid:nth-child(9) { transform: rotate(-2.5deg); }
+        .polaroid:nth-child(10) { transform: rotate(1.2deg); }
+        .polaroid:nth-child(11) { transform: rotate(-1.8deg); }
+        .polaroid:nth-child(12) { transform: rotate(2.2deg); }
+        .polaroid:nth-child(13) { transform: rotate(-0.8deg); }
+        .polaroid:nth-child(14) { transform: rotate(1.8deg); }
+        .polaroid:nth-child(15) { transform: rotate(-2.2deg); }
+
+        /* Continue pattern for more items */
+        .polaroid:nth-child(n+16):nth-child(odd) { transform: rotate(-1deg); }
+        .polaroid:nth-child(n+16):nth-child(even) { transform: rotate(1deg); }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.08);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            z-index: 10;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+
+        /* Placeholder for when no image is provided */
+        .polaroid .img-placeholder {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .img-placeholder::before {
+            content: "📷";
+            font-size: 40px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .polaroid-caption {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            font-style: italic;
+        }
+
+        /* Category sections */
+        .category-section {
+            margin-bottom: 80px;
+        }
+
+        .category-title {
+            color: #961043;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .category-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: #f39c12;
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu ul {
+                flex-wrap: wrap;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 25px;
+            }
+            
+            .polaroid {
+                padding: 15px;
+                padding-bottom: 60px;
+                max-width: 280px;
+            }
+            
+            .polaroid img,
+            .img-placeholder {
+                height: 200px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .gallery-title {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+
+            .category-title {
+                font-size: 1.4rem;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .polaroid {
+                max-width: 100%;
+            }
+
+            .main-content {
+                padding: 20px 10px;
+            }
+
+            .lace-frame {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Decorative buttons scattered around -->
@@ -39,167 +357,134 @@
     <!-- Main Content -->
     <div class="main-content">
         <div class="lace-frame">
-            <div class="gallery-container">
-                <h2 id="gallery-title" style="color: #961043; margin-bottom: 20px; text-align: center;">Gallery</h2>
-                
-                <!-- Gallery Navigation Buttons -->
-                <div class="gallery-nav-buttons">
-                    <button class="gallery-nav-btn" onclick="showGallery('all')" data-category="all">All</button>
-                    <button class="gallery-nav-btn" onclick="showGallery('paintings')" data-category="paintings">Paintings</button>
-                    <button class="gallery-nav-btn" onclick="showGallery('bw-paintings')" data-category="bw-paintings">B&W Paintings</button>
-                    <button class="gallery-nav-btn" onclick="showGallery('color-paintings')" data-category="color-paintings">Color Paintings</button>
-                    <button class="gallery-nav-btn" onclick="showGallery('photography')" data-category="photography">Photography</button>
-                    <button class="gallery-nav-btn" onclick="showGallery('bw-photography')" data-category="bw-photography">B&W Photography</button>
-                    <button class="gallery-nav-btn" onclick="showGallery('color-photography')" data-category="color-photography">Color Photography</button>
-                    <button class="gallery-nav-btn" onclick="showGallery('sketches')" data-category="sketches">Sketches</button>
+            <h1 class="gallery-title">My Portfolio</h1>
+            
+            <!-- PAINTINGS SECTION -->
+            <div class="category-section">
+                <h2 class="category-title">Paintings</h2>
+                <div class="gallery-grid">
+                    <div class="polaroid">
+                        <!-- Replace src="path/to/your/image.jpg" with actual image paths -->
+                        <!-- <img src="images/painting1.jpg" alt="Painting 1"> -->
+                        <div class="img-placeholder">Add your painting image here</div>
+                        <div class="polaroid-caption">Painting #1</div>
+                    </div>
+                    <div class="polaroid">
+                        <!-- <img src="images/painting2.jpg" alt="Painting 2"> -->
+                        <div class="img-placeholder">Add your painting image here</div>
+                        <div class="polaroid-caption">Painting #2</div>
+                    </div>
+                    <div class="polaroid">
+                        <!-- <img src="images/painting3.jpg" alt="Painting 3"> -->
+                        <div class="img-placeholder">Add your painting image here</div>
+                        <div class="polaroid-caption">Painting #3</div>
+                    </div>
+                    <div class="polaroid">
+                        <!-- <img src="images/painting4.jpg" alt="Painting 4"> -->
+                        <div class="img-placeholder">Add your painting image here</div>
+                        <div class="polaroid-caption">Painting #4</div>
+                    </div>
                 </div>
-                
-                <div class="polaroid-grid" id="polaroid-container">
-                    <!-- Polaroids will be generated by JavaScript -->
+            </div>
+
+            <!-- BLACK & WHITE PAINTINGS SECTION -->
+            <div class="category-section">
+                <h2 class="category-title">Black & White Paintings</h2>
+                <div class="gallery-grid">
+                    <div class="polaroid">
+                        <!-- <img src="images/bw-painting1.jpg" alt="B&W Painting 1"> -->
+                        <div class="img-placeholder">Add your B&W painting here</div>
+                        <div class="polaroid-caption">B&W Painting #1</div>
+                    </div>
+                    <div class="polaroid">
+                        <!-- <img src="images/bw-painting2.jpg" alt="B&W Painting 2"> -->
+                        <div class="img-placeholder"><img src="images/"></div>
+                        <div class="polaroid-caption">B&W Painting #2</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLOR PAINTINGS SECTION -->
+            <div class="category-section" id="colour-paintings">
+                <h2 class="category-title">Colour Paintings</h2>
+                <div class="gallery-grid">
+                    <div class="polaroid">
+                        <!-- <img src="images/color-painting1.jpg" alt="Color Painting 1"> -->
+                         <a href="images/resized/self-portrait-1-large.png" data-lightbox="portfoilio">
+                                <img src="images/resized/self-portrait-1-small.png">
+                         </a>
+                        <div class="polaroid-caption">Color Painting #1</div>
+                    </div>
+                    <div class="polaroid">
+                        <!-- <img src="images/color-painting2.jpg" alt="Color Painting 2"> -->
+                        <div class="img-placeholder">Add your color painting here</div>
+                        <div class="polaroid-caption">Color Painting #2</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHOTOGRAPHY SECTION -->
+            <div class="category-section" id="photography">
+                <h2 class="category-title">Photography</h2>
+                <div class="gallery-grid">
+                    <div class="polaroid">
+                        <!-- <img src="images/photo1.jpg" alt="Photo 1"> -->
+                        <div class="img-placeholder">Add your photo here</div>
+                        <div class="polaroid-caption">Photo #1</div>
+                    </div>
+                    <div class="polaroid">
+                        <!-- <img src="images/photo2.jpg" alt="Photo 2"> -->
+                        <div class="img-placeholder">Add your photo here</div>
+                        <div class="polaroid-caption">Photo #2</div>
+                    </div>
+                    <div class="polaroid">
+                        <!-- <img src="images/photo3.jpg" alt="Photo 3"> -->
+                        <div class="img-placeholder">Add your photo here</div>
+                        <div class="polaroid-caption">Photo #3</div>
+                    </div>
+                    <div class="polaroid">
+                        <!-- <img src="images/photo4.jpg" alt="Photo 4"> -->
+                        <div class="img-placeholder">Add your photo here</div>
+                        <div class="polaroid-caption">Photo #4</div>
+                    </div>
+                    <div class="polaroid">
+                        <!-- <img src="images/photo5.jpg" alt="Photo 5"> -->
+                        <div class="img-placeholder">Add your photo here</div>
+                        <div class="polaroid-caption">Photo #5</div>
+                    </div>
+                    <div class="polaroid">
+                        <!-- <img src="images/photo6.jpg" alt="Photo 6"> -->
+                        <div class="img-placeholder">Add your photo here</div>
+                        <div class="polaroid-caption">Photo #6</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SKETCHES SECTION -->
+            <div class="category-section">
+                <h2 class="category-title">Sketches</h2>
+                <div class="gallery-grid">
+                    <div class="polaroid">
+                        <!-- <img src="images/sketch1.jpg" alt="Sketch 1"> -->
+                        <div class="img-placeholder">Add your sketch here</div>
+                        <div class="polaroid-caption">Sketch #1</div>
+                    </div>
+                    <div class="polaroid">
+                        <!-- <img src="images/sketch2.jpg" alt="Sketch 2"> -->
+                        <div class="img-placeholder">Add your sketch here</div>
+                        <div class="polaroid-caption">Sketch #2</div>
+                    </div>
+                    <div class="polaroid">
+                        <!-- <img src="images/sketch3.jpg" alt="Sketch 3"> -->
+                        <div class="img-placeholder">Add your sketch here</div>
+                        <div class="polaroid-caption">Sketch #3</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Lightbox Modal -->
-    <div id="lightbox" class="lightbox">
-        <div class="lightbox-content">
-            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-            <button class="lightbox-nav lightbox-prev" onclick="previousImage()">&#8249;</button>
-            <button class="lightbox-nav lightbox-next" onclick="nextImage()">&#8250;</button>
-            <div class="lightbox-img" id="lightbox-img">Large Image View</div>
-            <div class="lightbox-caption" id="lightbox-caption">Image Caption</div>
-        </div>
-    </div>
+    <script src="js/lightbox-plus-jquery.min.js"></script>
 
-    <script>
-        // Gallery data
-        const galleryData = {
-            'all': { title: 'All Works', count: 54 },
-            'paintings': { title: 'Paintings', count: 9 },
-            'bw-paintings': { title: 'Black and White Paintings', count: 4 },
-            'color-paintings': { title: 'Colour Paintings', count: 4 },
-            'photography': { title: 'Photography', count: 54 },
-            'bw-photography': { title: 'Black and White Photography', count: 24 },
-            'color-photography': { title: 'Colour Photography', count: 30 },
-            'sketches': { title: 'Sketches', count: 5 }
-        };
-
-        // Current gallery state
-        let currentCategory = 'all';
-        let currentImageIndex = 0;
-        let currentImages = [];
-
-        // Function to show gallery with specific category
-        function showGallery(category) {
-            currentCategory = category;
-            const data = galleryData[category];
-            document.getElementById('gallery-title').textContent = data.title;
-            
-            // Update gallery navigation buttons
-            const galleryNavBtns = document.querySelectorAll('.gallery-nav-btn');
-            galleryNavBtns.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.category === category) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            // Generate images array for current category
-            currentImages = [];
-            for (let i = 1; i <= data.count; i++) {
-                currentImages.push({
-                    id: i,
-                    title: `${data.title} #${i}`,
-                    category: category
-                });
-            }
-            
-            // Generate polaroids
-            const container = document.getElementById('polaroid-container');
-            container.innerHTML = '';
-            
-            currentImages.forEach((image, index) => {
-                const polaroid = document.createElement('div');
-                polaroid.className = 'polaroid';
-                polaroid.onclick = () => openLightbox(index);
-                polaroid.innerHTML = `
-                    <div class="polaroid-img">Image ${image.id}</div>
-                    <div class="polaroid-caption">${image.title}</div>
-                `;
-                container.appendChild(polaroid);
-            });
-        }
-
-        // Lightbox functions
-        function openLightbox(imageIndex) {
-            currentImageIndex = imageIndex;
-            updateLightboxContent();
-            document.getElementById('lightbox').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function nextImage() {
-            if (currentImageIndex < currentImages.length - 1) {
-                currentImageIndex++;
-            } else {
-                currentImageIndex = 0;
-            }
-            updateLightboxContent();
-        }
-
-        function previousImage() {
-            if (currentImageIndex > 0) {
-                currentImageIndex--;
-            } else {
-                currentImageIndex = currentImages.length - 1;
-            }
-            updateLightboxContent();
-        }
-
-        function updateLightboxContent() {
-            const currentImage = currentImages[currentImageIndex];
-            document.getElementById('lightbox-img').textContent = `Large View - Image ${currentImage.id}`;
-            document.getElementById('lightbox-caption').textContent = 
-                `${currentImage.title} (${currentImageIndex + 1} of ${currentImages.length})`;
-        }
-
-        // Keyboard navigation for lightbox
-        document.addEventListener('keydown', function(e) {
-            if (document.getElementById('lightbox').classList.contains('active')) {
-                if (e.key === 'Escape') {
-                    closeLightbox();
-                } else if (e.key === 'ArrowLeft') {
-                    previousImage();
-                } else if (e.key === 'ArrowRight') {
-                    nextImage();
-                }
-            }
-        });
-
-        // Close lightbox when clicking outside content
-        document.getElementById('lightbox').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeLightbox();
-            }
-        });
-
-        // Initialize gallery
-        window.addEventListener('load', function() {
-            // Check if a category was selected from home page
-            const selectedCategory = localStorage.getItem('selectedCategory');
-            if (selectedCategory) {
-                showGallery(selectedCategory);
-                localStorage.removeItem('selectedCategory'); // Clean up
-            } else {
-                showGallery('all');
-            }
-        });
-    </script>
 </body>
 </html>
