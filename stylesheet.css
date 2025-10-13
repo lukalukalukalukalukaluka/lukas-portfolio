@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Mansalva&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -6,8 +8,8 @@
 
 body {
     
-    font-family: 'Georgia', serif;
-    background: #4a90e2 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234a90e2"/><path d="M0 0h50v50H0zM50 50h50v50H50z" fill="%235ba3f5" opacity="0.3"/></svg>') repeat;
+    font-family: 'Manslava', serif;
+    background: #fefba5 url('images/white-cotton-textures-surface6.png') repeat;
     min-height: 100vh;
     overflow-x: hidden;
 }
@@ -25,26 +27,27 @@ body {
 
 .btn-deco {
     position: absolute;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     pointer-events: none;
+    
 }
 
 .btn-navy {
-    background: #2c3e50;
-    width: 40px;
-    height: 40px;
+    background: url('images/buttons/button-002.png') no-repeat;
+    width: 150px; 
+    height: 150px;
 }
 
 .btn-gold {
-    background: #f39c12;
-    width: 25px;
-    height: 25px;
+    background: url('images/buttons/button-004.png') no-repeat;
+    width: 100px;
+    height: 100px;
 }
 
 .btn-yellow {
-    background: #f1c40f;
-    width: 15px;
-    height: 15px;
+    background:url('images/buttons/button-007.png') no-repeat;
+    width: 70px;
+    height: 70px;
 }
 
 /* Position decorative elements */
@@ -195,7 +198,7 @@ body {
     border-radius: 5px;
     font-size: 14px;
     transition: border-color 0.3s ease;
-    font-family: 'Georgia', serif;
+    font-family: 'Manslava', serif;
 }
 
 .form-group input:focus,
@@ -219,7 +222,7 @@ body {
     font-size: 16px;
     font-weight: bold;
     transition: background 0.3s ease;
-    font-family: 'Georgia', serif;
+    font-family: 'Manslava', serif;
 }
 
 .submit-btn:hover {
