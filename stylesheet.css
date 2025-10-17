@@ -126,9 +126,10 @@ body {
 
 .lace-frame {
     background: white;
+
     border: 20px solid white;
     border-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><rect width="60" height="60" fill="white"/><path d="M0 30c8-8 16-8 24 0s16 8 24 0c8 8 8 16 0 24s-8 16 0 24c-8-8-16-8-24 0s-16-8-24 0c-8-8-8-16 0-24s8-16 0-24z" fill="%23e8e8e8"/></svg>') 20;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0 ,0.3);
     min-height: 600px;
     padding: 40px;
     position: relative;
